@@ -31,7 +31,7 @@ func _physics_process(delta):
 		
 	# Ground velocity
 	target_velocity.x = direction.x * speed	
-	target_velocity.y = direction.y * speed
+	target_velocity.z = direction.z * speed
 	
 	# Vertical velocity
 	if not is_on_floor(): # If in the air, move vertically. Gravity.
