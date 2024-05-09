@@ -7,6 +7,8 @@
 size = Vector3(1.6275, 0.909348, 1.89822)
 
 [node name="Mob" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_rfigo")
 
 [node name="Pivot" type="Node3D" parent="."]

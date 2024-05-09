@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://doh6fbi2am86m"]
+[gd_scene load_steps=9 format=3 uid="uid://doh6fbi2am86m"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_odotg"]
 [ext_resource type="PackedScene" uid="uid://b7ehgp22yc8bj" path="res://player.tscn" id="1_owak5"]
+[ext_resource type="PackedScene" uid="uid://7kp5860v16gj" path="res://mob.tscn" id="2_g61nb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_olg6n"]
 size = Vector3(60, 2, 60)
@@ -8,12 +10,27 @@ size = Vector3(60, 2, 60)
 [sub_resource type="BoxMesh" id="BoxMesh_0smoc"]
 size = Vector3(60, 2, 60)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_coucu"]
+albedo_color = Color(1, 0, 1, 1)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_oygfv"]
+material = SubResource("StandardMaterial3D_coucu")
+
+[sub_resource type="Curve3D" id="Curve3D_jjiej"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -14.1628, 0, -11.0255, 0, 0, 0, 0, 0, 0, 14.924, 0, -10.8459, 0, 0, 0, 0, 0, 0, 15.2831, 0, 14.1113, 0, 0, 0, 0, 0, 0, -14.1628, 0, 14.1113, 0, 0, 0, 0, 0, 0, -14.1628, 0, -11.0255),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
 
 [node name="Main" type="Node"]
+script = ExtResource("1_odotg")
+mob_scene = ExtResource("2_g61nb")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 shape = SubResource("BoxShape3D_olg6n")
@@ -31,9 +48,34 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Camera Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3.53553, 11.2218)
 
 [node name="Cylinders" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, -11)
 mesh = SubResource("CylinderMesh_oygfv")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 14)
+mesh = SubResource("CylinderMesh_oygfv")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -11)
+mesh = SubResource("CylinderMesh_oygfv")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 14)
+mesh = SubResource("CylinderMesh_oygfv")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_jjiej")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-0.00617266, 0, -0.999981, 0, 1, 0, 0.999981, 0, -0.00617266, -14.1628, 0, -11.0255)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
