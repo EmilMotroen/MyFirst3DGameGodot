@@ -4,11 +4,11 @@ extends CharacterBody3D
 signal squashed
 
 # Minimum speed of the mob in meters per second
-@export var min_speed = 10
+@export var min_speed = 8
 # Maximum speed of the mob in meters per second
-@export var max_speed = 18
+@export var max_speed = 20
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	move_and_slide()
 	
 	
@@ -21,9 +21,9 @@ func initialize(start_position, player_position):
 	# Position the mob by placing it at the start_position
 	# and rotate it towards the players position
 	look_at_from_position(start_position, player_position, Vector3.UP)
-	# Rotate the mob +- 45 degrees so that it doesn't move directly
-	# towards the player
-	rotate_y(randf_range(-PI / 4, PI /4))
+	# Rotate the mob +- 52.94 degrees so that it doesn't move directly
+	# towards the player to make them more unpredictable
+	rotate_y(randf_range(-PI / 3.4, PI / 3.4))
 	
 	# Get a random speed as an integer
 	var random_speed = randi_range(min_speed, max_speed)
