@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b7ehgp22yc8bj"]
 
 [ext_resource type="PackedScene" uid="uid://bsbga1lw8cw7s" path="res://art/player.glb" id="1_74nxs"]
-[ext_resource type="Script" path="res://Player.gd" id="1_e20oy"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_e20oy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cy03a"]
 radius = 0.8
